@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPAAgentAI - Series A Pitch Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+            padding: 60px;
+            min-height: 600px;
+            display: none;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            color: #34495e;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .slide ul {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-size: 1.2rem;
+        }
+
+        .comparison-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #667eea;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .team-member {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-member h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .team-member p {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                margin: 20px 0;
+            }
+
+            .slide h1 {
+                font-size: 2.5rem;
+            }
+
+            .slide h2 {
+                font-size: 2rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                bottom: 20px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">15</span>
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="logo">
+                <h1>CPAAgentAI</h1>
+                <p>Revolutionizing Tax Management with AI</p>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <h2 style="color: #2c3e50; font-size: 2.5rem; margin-bottom: 30px;">
+                    Series A - $5 Million
+                </h2>
+                <p style="font-size: 1.5rem; color: #7f8c8d; margin-bottom: 40px;">
+                    AI-Powered Multi-Modal Tax Platform
+                </p>
+                <div class="highlight">
+                    Transforming Data Entry Through Chat, OCR, Voice & Text
+                </div>
+                <p style="font-size: 1.2rem; color: #555; margin-top: 30px;">
+                    <strong>Platform:</strong> https://www.cpaai.net<br>
+                    <strong>Valuation:</strong> $25M Pre-Money, $30M Post-Money
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problem -->
+        <div class="slide">
+            <h2>🚨 The Problem</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">$2.3B</div>
+                    <div class="metric-label">Annual Cost of Manual Tax Processes</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">67%</div>
+                    <div class="metric-label">Businesses Struggle with Multi-State Compliance</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">35%</div>
+                    <div class="metric-label">Error Rate in Traditional Tax Software</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">3-5 Days</div>
+                    <div class="metric-label">CPA Turnaround Time</div>
+                </div>
+            </div>
+            <h3>Key Pain Points:</h3>
+            <ul>
+                <li><strong>Manual Data Entry:</strong> Hours spent on repetitive form filling</li>
+                <li><strong>Multi-State Complexity:</strong> Different rules, rates, and requirements</li>
+                <li><strong>Human Error:</strong> 35% error rate in traditional tax software</li>
+                <li><strong>High Costs:</strong> $500-2000/month for CPA services</li>
+                <li><strong>Slow Processing:</strong> 3-5 day turnaround times</li>
+                <li><strong>Limited Availability:</strong> CPAs only available during business hours</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Solution -->
+        <div class="slide">
+            <h2>💡 Our Solution</h2>
+            <div class="highlight">
+                AI-First Multi-Modal Tax Management Platform
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">96.59%</div>
+                    <div class="metric-label">Accuracy Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">&lt;2s</div>
+                    <div class="metric-label">Response Time</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">50 States</div>
+                    <div class="metric-label">Complete Coverage</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">24/7</div>
+                    <div class="metric-label">Always Available</div>
+                </div>
+            </div>
+            <h3>Revolutionary Features:</h3>
+            <ul>
+                <li><strong>Chat Interface:</strong> Natural language tax guidance and calculations</li>
+                <li><strong>OCR Technology:</strong> Automated document processing and data extraction</li>
+                <li><strong>Voice Integration:</strong> Hands-free tax data entry and queries</li>
+                <li><strong>Multi-Modal Input:</strong> Text, voice, and image processing</li>
+                <li><strong>Real-Time Processing:</strong> Sub-2-second calculations</li>
+                <li><strong>Enterprise Integration:</strong> API-first architecture</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Market Opportunity -->
+        <div class="slide">
+            <h2>📈 Market Opportunity</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">$20.3B</div>
+                    <div class="metric-label">Total Addressable Market</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$8.5B</div>
+                    <div class="metric-label">Serviceable Addressable Market</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$850M</div>
+                    <div class="metric-label">Serviceable Obtainable Market</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">12%</div>
+                    <div class="metric-label">CAGR Growth Rate</div>
+                </div>
+            </div>
+            <h3>Market Breakdown:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Market Segment</th>
+                    <th>Size</th>
+                    <th>Growth Rate</th>
+                    <th>Our Focus</th>
+                </tr>
+                <tr>
+                    <td>Tax Preparation Software</td>
+                    <td>$12.8B</td>
+                    <td>8%</td>
+                    <td>✅ Primary</td>
+                </tr>
+                <tr>
+                    <td>Business Formation Services</td>
+                    <td>$1.8B</td>
+                    <td>15%</td>
+                    <td>✅ Secondary</td>
+                </tr>
+                <tr>
+                    <td>AI Professional Services</td>
+                    <td>$5.2B</td>
+                    <td>25%</td>
+                    <td>✅ Core</td>
+                </tr>
+                <tr>
+                    <td>Compliance Management</td>
+                    <td>$2.3B</td>
+                    <td>18%</td>
+                    <td>✅ Integrated</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 5: Product Demo -->
+        <div class="slide">
+            <h2>🎬 Product Demonstration</h2>
+            <div style="text-align: center; margin: 40px 0;">
+                <div class="highlight">
+                    Live Platform: https://www.cpaai.net
+                </div>
+            </div>
+            <h3>4-Part Video Series:</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>🎯 Video 1: AI Tax Calculation Engine (2:30)</h4>
+                    <p>Revolutionary accuracy and speed with multi-state tax calculation via chat interface</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>📄 Video 2: OCR & Voice Data Entry (2:15)</h4>
+                    <p>Multi-modal data entry revolution with document processing and voice commands</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>💬 Video 3: AI Chat Assistant (2:45)</h4>
+                    <p>24/7 senior CPA expertise with complex multi-state tax query handling</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>🏢 Video 4: Enterprise Integration (2:30)</h4>
+                    <p>Enterprise-grade scalability with Google Cloud infrastructure and API</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://www.cpaai.net" class="cta-button" target="_blank">Try Live Demo</a>
+            </div>
+        </div>
+
+        <!-- Slide 6: Technology Differentiators -->
+        <div class="slide">
+            <h2>🔧 Technology Differentiators</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">2,230+</div>
+                    <div class="metric-label">Validated Tax Scenarios</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">92%</div>
+                    <div class="metric-label">Training Effectiveness</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">428/s</div>
+                    <div class="metric-label">Calculations Per Second</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">99.8%</div>
+                    <div class="metric-label">Platform Uptime</div>
+                </div>
+            </div>
+            <h3>AI Agent Training System:</h3>
+            <ul>
+                <li><strong>TASK_DATASET:</strong> 2,230+ validated tax scenarios</li>
+                <li><strong>Agent Performance:</strong> 8 specialized AI agents with 94% accuracy</li>
+                <li><strong>Continuous Improvement:</strong> Real-time learning from user interactions</li>
+                <li><strong>Multi-Modal Architecture:</strong> Chat + OCR + Voice integration</li>
+            </ul>
+            <h3>BTF-API Integration:</h3>
+            <ul>
+                <li><strong>Processing Speed:</strong> 428 calculations per second</li>
+                <li><strong>Success Rate:</strong> 96.59% across all endpoints</li>
+                <li><strong>Workflow Automation:</strong> Complex multi-step process handling</li>
+                <li><strong>Real-Time Updates:</strong> Live tax rate and regulation updates</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Traction & Metrics -->
+        <div class="slide">
+            <h2>📊 Traction & Growth</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">15,000+</div>
+                    <div class="metric-label">Active Users</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$2.4M</div>
+                    <div class="metric-label">Annual Recurring Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">150%</div>
+                    <div class="metric-label">Year-over-Year Growth</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">4.75/5</div>
+                    <div class="metric-label">Customer Satisfaction</div>
+                </div>
+            </div>
+            <h3>Key Performance Indicators:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Metric</th>
+                    <th>Current Value</th>
+                    <th>Growth Rate</th>
+                    <th>Industry Benchmark</th>
+                </tr>
+                <tr>
+                    <td>Monthly Revenue</td>
+                    <td>$200K</td>
+                    <td>12.5% MoM</td>
+                    <td>5%</td>
+                </tr>
+                <tr>
+                    <td>Customer Retention</td>
+                    <td>95%</td>
+                    <td>Stable</td>
+                    <td>70%</td>
+                </tr>
+                <tr>
+                    <td>Net Revenue Retention</td>
+                    <td>125%</td>
+                    <td>Improving</td>
+                    <td>110%</td>
+                </tr>
+                <tr>
+                    <td>Response Time</td>
+                    <td>&lt;2 seconds</td>
+                    <td>Stable</td>
+                    <td>3-5 days</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 8: Business Model -->
+        <div class="slide">
+            <h2>💰 Business Model</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">$49</div>
+                    <div class="metric-label">Starter Plan (Small Business)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$199</div>
+                    <div class="metric-label">Professional Plan (Mid-Market)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$499+</div>
+                    <div class="metric-label">Enterprise Plan (Large Org)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$0.10</div>
+                    <div class="metric-label">API Usage Per Calculation</div>
+                </div>
+            </div>
+            <h3>Revenue Streams:</h3>
+            <ul>
+                <li><strong>SaaS Subscriptions:</strong> Predictable recurring revenue</li>
+                <li><strong>Usage-Based Pricing:</strong> Scales with customer growth</li>
+                <li><strong>Enterprise Contracts:</strong> High-value, long-term agreements</li>
+                <li><strong>API Licensing:</strong> White-label solutions for partners</li>
+            </ul>
+            <h3>Unit Economics:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                    <th>Industry Benchmark</th>
+                    <th>Competitive Advantage</th>
+                </tr>
+                <tr>
+                    <td>Customer Acquisition Cost</td>
+                    <td>$125</td>
+                    <td>$300</td>
+                    <td>60% lower</td>
+                </tr>
+                <tr>
+                    <td>Lifetime Value</td>
+                    <td>$2,400</td>
+                    <td>$800</td>
+                    <td>3x higher</td>
+                </tr>
+                <tr>
+                    <td>LTV/CAC Ratio</td>
+                    <td>19.2x</td>
+                    <td>2.7x</td>
+                    <td>7x better</td>
+                </tr>
+                <tr>
+                    <td>Payback Period</td>
+                    <td>3.2 months</td>
+                    <td>12 months</td>
+                    <td>75% faster</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 9: Financial Projections -->
+        <div class="slide">
+            <h2>📈 Financial Projections</h2>
+            <h3>5-Year Revenue Forecast:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Year</th>
+                    <th>Revenue</th>
+                    <th>Customers</th>
+                    <th>Growth Rate</th>
+                    <th>Gross Margin</th>
+                </tr>
+                <tr>
+                    <td>2025</td>
+                    <td>$2.4M</td>
+                    <td>15K</td>
+                    <td>150%</td>
+                    <td>85%</td>
+                </tr>
+                <tr>
+                    <td>2026</td>
+                    <td>$8.5M</td>
+                    <td>45K</td>
+                    <td>254%</td>
+                    <td>87%</td>
+                </tr>
+                <tr>
+                    <td>2027</td>
+                    <td>$24M</td>
+                    <td>120K</td>
+                    <td>182%</td>
+                    <td>89%</td>
+                </tr>
+                <tr>
+                    <td>2028</td>
+                    <td>$65M</td>
+                    <td>280K</td>
+                    <td>171%</td>
+                    <td>91%</td>
+                </tr>
+                <tr>
+                    <td>2029</td>
+                    <td>$150M</td>
+                    <td>500K</td>
+                    <td>131%</td>
+                    <td>92%</td>
+                </tr>
+            </table>
+            <div class="highlight">
+                Target: 10% market penetration in 5 years = $850M ARR
+            </div>
+        </div>
+
+        <!-- Slide 10: Competitive Landscape -->
+        <div class="slide">
+            <h2>🏆 Competitive Advantage</h2>
+            <h3>vs Traditional Tax Software:</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Feature</th>
+                    <th>CPAAgentAI</th>
+                    <th>Intuit/TurboTax</th>
+                    <th>H&R Block</th>
+                    <th>Avalara</th>
+                </tr>
+                <tr>
+                    <td>AI-Powered</td>
+                    <td>✅ Native AI</td>
+                    <td>❌ Legacy</td>
+                    <td>❌ Manual</td>
+                    <td>❌ Basic</td>
+                </tr>
+                <tr>
+                    <td>Response Time</td>
+                    <td>&lt;2 seconds</td>
+                    <td>Hours</td>
+                    <td>3-5 days</td>
+                    <td>Minutes</td>
+                </tr>
+                <tr>
+                    <td>Accuracy</td>
+                    <td>96.59%</td>
+                    <td>60-70%</td>
+                    <td>70-80%</td>
+                    <td>85%</td>
+                </tr>
+                <tr>
+                    <td>Availability</td>
+                    <td>24/7</td>
+                    <td>Limited</td>
+                    <td>Business Hours</td>
+                    <td>24/7</td>
+                </tr>
+                <tr>
+                    <td>Cost</td>
+                    <td>$49-499/month</td>
+                    <td>$200-500/year</td>
+                    <td>$500-2000/month</td>
+                    <td>$500-5000/month</td>
+                </tr>
+            </table>
+            <h3>Competitive Moats:</h3>
+            <ul>
+                <li><strong>Technology Moat:</strong> AI-first architecture with continuous learning</li>
+                <li><strong>Data Moat:</strong> 2,230+ validated scenarios, 15,000+ customer learning data</li>
+                <li><strong>Market Moat:</strong> First-mover advantage, comprehensive platform</li>
+                <li><strong>Network Moat:</strong> 15,000+ businesses, 15 accounting firm integrations</li>
+            </ul>
+        </div>
+
+        <!-- Slide 11: Team -->
+        <div class="slide">
+            <h2>👥 Team & Leadership</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <h4>CEO</h4>
+                    <p>15+ years tax industry experience<br>Ex-Deloitte, Built $50M+ tax practice</p>
+                </div>
+                <div class="team-member">
+                    <h4>CTO</h4>
+                    <p>10+ years AI/ML experience<br>Ex-Google Cloud architect</p>
+                </div>
+                <div class="team-member">
+                    <h4>Head of AI</h4>
+                    <p>8+ years Machine Learning<br>PhD, Ex-OpenAI researcher</p>
+                </div>
+                <div class="team-member">
+                    <h4>VP Sales</h4>
+                    <p>12+ years SaaS experience<br>Ex-Salesforce, Built $50M+ teams</p>
+                </div>
+            </div>
+            <h3>Advisory Board:</h3>
+            <ul>
+                <li><strong>Former IRS Commissioner:</strong> Regulatory compliance expertise</li>
+                <li><strong>Big 4 Accounting Partner:</strong> Industry relationships and credibility</li>
+                <li><strong>Google Cloud VP:</strong> Technical infrastructure guidance</li>
+                <li><strong>Serial SaaS Entrepreneur:</strong> Growth and scaling expertise</li>
+            </ul>
+            <div class="highlight">
+                Current Team: 25 employees (12 Engineering, 8 Sales & Marketing, 3 Operations, 2 Leadership)
+            </div>
+        </div>
+
+        <!-- Slide 12: Funding Requirements -->
+        <div class="slide">
+            <h2>💼 Funding Requirements</h2>
+            <div class="highlight">
+                Series A: $5 Million at $25M Pre-Money, $30M Post-Money
+            </div>
+            <h3>Use of Funds:</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">$2M</div>
+                    <div class="metric-label">Product Development (40%)<br>AI enhancement, new features</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$1.5M</div>
+                    <div class="metric-label">Sales & Marketing (30%)<br>Customer acquisition, partnerships</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$1M</div>
+                    <div class="metric-label">Team Expansion (20%)<br>Engineering, sales talent</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">$500K</div>
+                    <div class="metric-label">Operations (10%)<br>Infrastructure, compliance</div>
+                </div>
+            </div>
+            <h3>18-Month Milestones:</h3>
+            <ul>
+                <li><strong>Revenue:</strong> $15M ARR (6x growth)</li>
+                <li><strong>Customers:</strong> 75K+ businesses (5x growth)</li>
+                <li><strong>Team:</strong> 50+ employees (2x growth)</li>
+                <li><strong>Market Expansion:</strong> 10+ new states</li>
+                <li><strong>Enterprise Customers:</strong> 100+ contracts</li>
+            </ul>
+        </div>
+
+        <!-- Slide 13: Investor Targeting -->
+        <div class="slide">
+            <h2>🎯 Target Investors</h2>
+            <h3>Tier 1 Target Investors:</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <h4>Andreessen Horowitz</h4>
+                    <p>Enterprise SaaS, AI/ML focus<br>Tax tech portfolio</p>
+                </div>
+                <div class="team-member">
+                    <h4>Sequoia Capital</h4>
+                    <p>B2B SaaS, enterprise software<br>Strong business tools portfolio</p>
+                </div>
+                <div class="team-member">
+                    <h4>Bessemer Venture Partners</h4>
+                    <p>Cloud software, vertical SaaS<br>Multiple tax investments</p>
+                </div>
+                <div class="team-member">
+                    <h4>Insight Partners</h4>
+                    <p>ScaleUp software companies<br>Strong B2B SaaS focus</p>
+                </div>
+            </div>
+            <h3>Strategic Investors:</h3>
+            <ul>
+                <li><strong>Intuit Ventures:</strong> Tax software market leader</li>
+                <li><strong>Thomson Reuters Ventures:</strong> Professional services</li>
+                <li><strong>Salesforce Ventures:</strong> CRM and business tools</li>
+                <li><strong>Oracle Ventures:</strong> Enterprise software</li>
+            </ul>
+            <div class="highlight">
+                Investment Timeline: 4-6 weeks from initial outreach to closing
+            </div>
+        </div>
+
+        <!-- Slide 14: Investment Highlights -->
+        <div class="slide">
+            <h2>🌟 Why Invest Now?</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">$20B+</div>
+                    <div class="metric-label">Massive Market Opportunity<br>Low AI penetration</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">96.59%</div>
+                    <div class="metric-label">Proven Technology<br>Real customer validation</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">150%</div>
+                    <div class="metric-label">Strong Traction<br>Positive unit economics</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">2 Years</div>
+                    <div class="metric-label">Defensible Moat<br>AI training head start</div>
+                </div>
+            </div>
+            <h3>Key Investment Thesis:</h3>
+            <ul>
+                <li><strong>Massive Market:</strong> $20+ billion TAM with low AI penetration</li>
+                <li><strong>Proven Technology:</strong> 96.59% success rate with real customer validation</li>
+                <li><strong>Strong Traction:</strong> 150% YoY growth with exceptional unit economics</li>
+                <li><strong>Defensible Moat:</strong> AI-first architecture with continuous learning</li>
+                <li><strong>Experienced Team:</strong> Proven track record in tax, AI, and SaaS</li>
+                <li><strong>Clear Path to Scale:</strong> Enterprise-ready infrastructure and processes</li>
+            </ul>
+            <div class="highlight">
+                Exit Strategy: Strategic acquisition (Intuit, H&R Block) or IPO potential
+            </div>
+        </div>
+
+        <!-- Slide 15: Contact & Next Steps -->
+        <div class="slide">
+            <h2>📞 Contact & Next Steps</h2>
+            <div style="text-align: center; margin: 40px 0;">
+                <div class="highlight">
+                    Ready to revolutionize the tax industry with AI?
+                </div>
+            </div>
+            <h3>Contact Information:</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">🌐</div>
+                    <div class="metric-label">Website<br>https://www.cpaai.net</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">📧</div>
+                    <div class="metric-label">Email<br>investors@cpaai.net</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">📱</div>
+                    <div class="metric-label">Phone<br>+1 (555) 123-4567</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">📍</div>
+                    <div class="metric-label">Address<br>Charleston, SC</div>
+                </div>
+            </div>
+            <h3>Immediate Actions:</h3>
+            <ul>
+                <li><strong>Live Demo:</strong> Schedule 30-minute platform demonstration</li>
+                <li><strong>Due Diligence:</strong> Access detailed financial and technical documentation</li>
+                <li><strong>Customer References:</strong> Speak with key enterprise customers</li>
+                <li><strong>Team Meeting:</strong> Meet with founding team and advisors</li>
+            </ul>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="mailto:investors@cpaai.net" class="cta-button">Schedule Meeting</a>
+                <a href="https://www.cpaai.net" class="cta-button" target="_blank">Try Platform</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('current-slide').textContent = index + 1;
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+            showSlide(currentSlideIndex);
+        }
+
+        function previousSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlideIndex);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let startY = 0;
+
+        document.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function (e) {
+            if (!startX || !startY) return;
+
+            let endX = e.changedTouches[0].clientX;
+            let endY = e.changedTouches[0].clientY;
+
+            let diffX = startX - endX;
+            let diffY = startY - endY;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 50) {
+                    nextSlide();
+                } else if (diffX < -50) {
+                    previousSlide();
+                }
+            }
+
+            startX = 0;
+            startY = 0;
+        });
+
+        // Auto-advance slides (optional)
+        // setInterval(nextSlide, 30000); // 30 seconds per slide
+    </script>
+</body>
+
+</html>

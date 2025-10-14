@@ -1,0 +1,10 @@
+# Pitch Deck Routes
+/pitch-deck /pitch-deck.html 200
+/pitch-deck-core /pitch-deck-core.html 200
+/qr-generator /qr-generator.html 200
+
+# API Routes (if needed)
+/api/* https://www.cpaai.net/api/:splat 200
+
+# Fallback
+/* /index.html 200

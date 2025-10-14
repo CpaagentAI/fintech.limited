@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPAAgentAI Pitch Deck - QR Code Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .qr-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .qr-code {
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #229954;
+            transform: translateY(-1px);
+        }
+
+        .instructions {
+            text-align: left;
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .preview-urls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .preview-urls h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .preview-urls a {
+            color: #667eea;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .preview-urls a:hover {
+            background: #e9ecef;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎯 CPAAgentAI Pitch Deck</h1>
+        <p class="subtitle">QR Code Generator for Easy Sharing</p>
+
+        <div class="preview-urls">
+            <h4>📋 Your Pitch Deck URLs:</h4>
+            <a href="#" id="comprehensive-url" target="_blank">Comprehensive 18-Slide Deck</a>
+            <a href="#" id="core-url" target="_blank">Core 15-Slide Version</a>
+        </div>
+
+        <input type="text" class="url-input" id="url-input" placeholder="Enter your Netlify URL here..." />
+        <button class="generate-btn" onclick="generateQR()">Generate QR Code</button>
+
+        <div class="qr-container" id="qr-container" style="display: none;">
+            <h3>📱 QR Code Generated</h3>
+            <div class="qr-code" id="qr-code"></div>
+            <button class="download-btn" onclick="downloadQR()">Download QR Code</button>
+            <button class="download-btn" onclick="printQR()">Print QR Code</button>
+        </div>
+
+        <div class="instructions">
+            <h3>🚀 How to Use:</h3>
+            <ol>
+                <li><strong>Deploy to Netlify:</strong> Drag & drop your <code>netlify-deployment</code> folder to
+                    netlify.com</li>
+                <li><strong>Get URL:</strong> Copy your Netlify URL (e.g., https://amazing-name-123456.netlify.app)</li>
+                <li><strong>Generate QR:</strong> Paste URL above and click "Generate QR Code"</li>
+                <li><strong>Share:</strong> Download or print QR code for easy mobile access</li>
+                <li><strong>Present:</strong> Investors can scan QR code to view pitch deck on their phones</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Set default URLs (update these after Netlify deployment)
+        document.getElementById('comprehensive-url').href = '#';
+        document.getElementById('core-url').href = '#';
+
+        function generateQR() {
+            const url = document.getElementById('url-input').value;
+            if (!url) {
+                alert('Please enter a URL first');
+                return;
+            }
+
+            const qrContainer = document.getElementById('qr-container');
+            const qrCode = document.getElementById('qr-code');
+
+            // Clear previous QR code
+            qrCode.innerHTML = '';
+
+            // Generate QR code
+            QRCode.toCanvas(qrCode, url, {
+                width: 300,
+                height: 300,
+                color: {
+                    dark: '#2c3e50',
+                    light: '#ffffff'
+                }
+            }, function (error) {
+                if (error) {
+                    console.error('QR Code generation error:', error);
+                    alert('Error generating QR code. Please try again.');
+                } else {
+                    qrContainer.style.display = 'block';
+                }
+            });
+        }
+
+        function downloadQR() {
+            const canvas = document.querySelector('#qr-code canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'cpaai-pitch-deck-qr.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            }
+        }
+
+        function printQR() {
+            const canvas = document.querySelector('#qr-code canvas');
+            if (canvas) {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>CPAAgentAI Pitch Deck QR Code</title>
+                            <style>
+                                body { 
+                                    font-family: Arial, sans-serif; 
+                                    text-align: center; 
+                                    padding: 20px; 
+                                }
+                                h1 { color: #2c3e50; }
+                                img { max-width: 100%; height: auto; }
+                            </style>
+                        </head>
+                        <body>
+                            <h1>CPAAgentAI Pitch Deck</h1>
+                            <p>Scan QR Code to Access Pitch Deck</p>
+                            <img src="${canvas.toDataURL()}" alt="QR Code" />
+                            <p>URL: ${document.getElementById('url-input').value}</p>
+                        </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            }
+        }
+
+        // Auto-fill URL if available
+        window.addEventListener('load', function () {
+            // Check if we're on Netlify
+            if (window.location.hostname.includes('netlify.app')) {
+                document.getElementById('url-input').value = window.location.href;
+                generateQR();
+            }
+        });
+    </script>
+</body>
+
+</html>
