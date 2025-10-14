@@ -1,7 +1,20 @@
-# Pitch Deck Routes
-/pitch-deck /pitch-deck.html 200
-/pitch-deck-core /pitch-deck-core.html 200
-/qr-generator /qr-generator.html 200
+# FinPro Directory Routes for fintech.limited
+# Main routes
+/ /index.html 200
+/presentation /pitch-deck.html 200
+/presentation/core /pitch-deck-core.html 200
+/qr /qr-generator.html 200
+
+# Professional directory routes
+/professionals /professionals.html 200
+/services /services.html 200
+/about /about.html 200
+/contact /contact.html 200
+
+# Legacy routes (redirect to new structure)
+/pitch-deck /presentation 301
+/pitch-deck-core /presentation/core 301
+/qr-generator /qr 301
 
 # API Routes (if needed)
 /api/* https://www.cpaai.net/api/:splat 200
