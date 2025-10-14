@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Bookkeeping AI - FinPro Directory</title>
+    <meta name="description" content="Revolutionary AI-powered bookkeeping system that automatically categorizes transactions, reconciles accounts, and generates reports with 98.7% accuracy.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/search.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .demo-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .demo-content p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .demo-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .demo-features li {
+            padding: 0.75rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .demo-features li:before {
+            content: "🤖";
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .demo-interface {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 500px;
+        }
+
+        .demo-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .demo-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .demo-tab.active {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .demo-content-area {
+            min-height: 400px;
+        }
+
+        /* Interactive Demo Components */
+        .transaction-demo {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .transaction-item.processing {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .transaction-item.completed {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .transaction-item.error {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .transaction-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-processing {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .status-completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-error {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .pricing-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* ROI Calculator */
+        .roi-calculator {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .roi-calculator h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calculator-input label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .calculator-input input {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .calculator-results {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .roi-result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .testimonial-company {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            padding: 0.5rem 0;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Quick Links */
+        .quick-links {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        .quick-links a {
+            display: block;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .quick-links a:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Quick Links -->
+    <div class="quick-links">
+        <a href="/">Home</a>
+        <a href="/services">All Solutions</a>
+        <a href="/ai/payroll">Payroll AI</a>
+        <a href="/contact">Contact</a>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">FinPro Directory</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/professionals">Professionals</a></li>
+                <li><a href="/services">AI Solutions</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Automated Bookkeeping AI</h1>
+            <p>Revolutionary AI-powered system that automatically categorizes transactions, reconciles accounts, and generates reports with 98.7% accuracy.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">98.7%</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15hrs</div>
+                    <div class="stat-label">Time Saved Weekly</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$2,400</div>
+                    <div class="stat-label">Monthly Savings</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Processing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section class="demo-section">
+        <div class="container">
+            <div class="demo-container">
+                <div class="demo-content">
+                    <h2>See AI Bookkeeping in Action</h2>
+                    <p>Watch our AI automatically categorize transactions, reconcile accounts, and generate reports in real-time. No manual data entry required.</p>
+                    
+                    <ul class="demo-features">
+                        <li>Automatic transaction categorization</li>
+                        <li>Real-time account reconciliation</li>
+                        <li>Machine learning accuracy</li>
+                        <li>Integration with major banks</li>
+                        <li>Custom rule creation</li>
+                        <li>Exception handling</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-interface">
+                    <div class="demo-tabs">
+                        <button class="demo-tab active" onclick="switchDemoTab('transactions')">Transactions</button>
+                        <button class="demo-tab" onclick="switchDemoTab('reconciliation')">Reconciliation</button>
+                        <button class="demo-tab" onclick="switchDemoTab('reports')">Reports</button>
+                    </div>
+                    
+                    <div class="demo-content-area" id="demoContent">
+                        <!-- Transactions Demo -->
+                        <div id="transactionsDemo">
+                            <h3>Live Transaction Processing</h3>
+                            <div class="transaction-demo">
+                                <div class="transaction-item processing" id="transaction1">
+                                    <div class="transaction-info">
+                                        <div class="transaction-description">Office Supplies - Staples</div>
+                                        <div class="transaction-amount">-$127.50</div>
+                                    </div>
+                                    <div class="transaction-status status-processing">Processing...</div>
+                                </div>
+                                
+                                <div class="transaction-item completed" id="transaction2">
+                                    <div class="transaction-info">
+                                        <div class="transaction-description">Client Payment - ABC Corp</div>
+                                        <div class="transaction-amount">+$2,500.00</div>
+                                    </div>
+                                    <div class="transaction-status status-completed">✓ Categorized</div>
+                                </div>
+                                
+                                <div class="transaction-item processing" id="transaction3">
+                                    <div class="transaction-info">
+                                        <div class="transaction-description">Bank Fee - Monthly</div>
+                                        <div class="transaction-amount">-$15.00</div>
+                                    </div>
+                                    <div class="transaction-status status-processing">Processing...</div>
+                                </div>
+                            </div>
+                            
+                            <button onclick="processTransactions()" style="width: 100%; padding: 1rem; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+                                Process Transactions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Categorization</h3>
+                    <p>Machine learning algorithms automatically categorize transactions with 98.7% accuracy, learning from your patterns.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Processing</h3>
+                    <p>Transactions are processed instantly as they occur, providing up-to-date financial information.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Bank Integration</h3>
+                    <p>Seamlessly connects with major banks and financial institutions for automatic data import.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Custom Reports</h3>
+                    <p>Generate detailed financial reports and analytics tailored to your business needs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Exception Handling</h3>
+                    <p>Intelligent system flags unusual transactions and exceptions for manual review.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Custom Rules</h3>
+                    <p>Create custom categorization rules to match your specific business requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">Pricing Plans</h2>
+            <div class="pricing-container">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">$199<span class="price-period">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Up to 500 transactions/month</li>
+                        <li>Basic categorization</li>
+                        <li>Standard reports</li>
+                        <li>Email support</li>
+                        <li>Bank integration</li>
+                    </ul>
+                    <button class="pricing-btn">Get Started</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">$299<span class="price-period">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Up to 2,000 transactions/month</li>
+                        <li>Advanced AI categorization</li>
+                        <li>Custom reports</li>
+                        <li>Priority support</li>
+                        <li>Multiple bank accounts</li>
+                        <li>Custom rules</li>
+                    </ul>
+                    <button class="pricing-btn">Get Started</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$499<span class="price-period">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited transactions</li>
+                        <li>Premium AI features</li>
+                        <li>Advanced analytics</li>
+                        <li>Dedicated support</li>
+                        <li>API access</li>
+                        <li>Custom integrations</li>
+                    </ul>
+                    <button class="pricing-btn">Contact Sales</button>
+                </div>
+            </div>
+            
+            <!-- ROI Calculator -->
+            <div class="roi-calculator">
+                <h3>Calculate Your ROI</h3>
+                <div class="calculator-inputs">
+                    <div class="calculator-input">
+                        <label>Monthly Transactions</label>
+                        <input type="number" id="monthlyTransactions" value="1000" onchange="calculateROI()">
+                    </div>
+                    <div class="calculator-input">
+                        <label>Current Processing Time (hours)</label>
+                        <input type="number" id="currentTime" value="20" onchange="calculateROI()">
+                    </div>
+                    <div class="calculator-input">
+                        <label>Hourly Rate ($)</label>
+                        <input type="number" id="hourlyRate" value="50" onchange="calculateROI()">
+                    </div>
+                </div>
+                <div class="calculator-results">
+                    <div class="roi-result" id="roiResult">Monthly Savings: $750</div>
+                    <div>Time Saved: 15 hours/month</div>
+                    <div>ROI: 150% in first year</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">What Our Clients Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"The AI bookkeeping system has saved us 15 hours per week. The accuracy is incredible and it learns our patterns quickly."</div>
+                    <div class="testimonial-author">Sarah Johnson</div>
+                    <div class="testimonial-company">CPA, Atlanta Tax Services</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"We've reduced our bookkeeping costs by 60% while improving accuracy. The integration with our bank was seamless."</div>
+                    <div class="testimonial-author">Michael Chen</div>
+                    <div class="testimonial-company">CFO, TechStart Inc.</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"The custom rules feature allows us to maintain our specific categorization standards while benefiting from AI automation."</div>
+                    <div class="testimonial-author">Emily Rodriguez</div>
+                    <div class="testimonial-company">Bookkeeper, Rodriguez & Associates</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Bookkeeping?</h2>
+            <p>Join thousands of professionals who have revolutionized their bookkeeping with AI technology.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn-primary">Start Free Trial</a>
+                <a href="/ai/payroll" class="btn-secondary">View Payroll AI</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI Solutions</h3>
+                    <ul>
+                        <li><a href="/ai/bookkeeping">Automated Bookkeeping</a></li>
+                        <li><a href="/ai/payroll">Smart Payroll</a></li>
+                        <li><a href="/ai/audit">Audit Assistant</a></li>
+                        <li><a href="/ai/analytics">Financial Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/presentation">Presentation</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Patriot Tax Services Ltd</li>
+                        <li>Atlanta, GA</li>
+                        <li>Phone: +1-470-596-1308</li>
+                        <li>Email: info@cpaai.net</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FinPro Directory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo functionality
+        function switchDemoTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.demo-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update demo content
+            const content = document.getElementById('demoContent');
+            
+            switch(tabName) {
+                case 'transactions':
+                    content.innerHTML = document.getElementById('transactionsDemo').innerHTML;
+                    break;
+                case 'reconciliation':
+                    content.innerHTML = `
+                        <h3>Account Reconciliation</h3>
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Bank Balance</span>
+                                <span style="color: #28a745;">$12,450.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span>Book Balance</span>
+                                <span style="color: #28a745;">$12,450.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                                <span><strong>Status</strong></span>
+                                <span style="color: #28a745; font-weight: bold;">✓ Reconciled</span>
+                            </div>
+                        </div>
+                        <p style="color: #666;">All accounts automatically reconciled with 100% accuracy.</p>
+                    `;
+                    break;
+                case 'reports':
+                    content.innerHTML = `
+                        <h3>Financial Reports</h3>
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <h4>Monthly Financial Summary</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                                <div>
+                                    <div style="color: #28a745; font-weight: bold;">Revenue: $45,230</div>
+                                    <div style="color: #dc3545; font-weight: bold;">Expenses: $23,150</div>
+                                </div>
+                                <div>
+                                    <div style="color: #667eea; font-weight: bold;">Net Income: $22,080</div>
+                                    <div style="color: #666;">Margin: 48.8%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="generateReport()" style="width: 100%; padding: 1rem; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+                            Generate Full Report
+                        </button>
+                    `;
+                    break;
+            }
+        }
+
+        function processTransactions() {
+            const transactions = document.querySelectorAll('.transaction-item.processing');
+            transactions.forEach((transaction, index) => {
+                setTimeout(() => {
+                    transaction.classList.remove('processing');
+                    transaction.classList.add('completed');
+                    transaction.querySelector('.transaction-status').textContent = '✓ Categorized';
+                    transaction.querySelector('.transaction-status').className = 'transaction-status status-completed';
+                }, (index + 1) * 1000);
+            });
+        }
+
+        function generateReport() {
+            alert('Generating comprehensive financial report...\n\nThis would typically:\n• Compile all transactions\n• Generate P&L statement\n• Create balance sheet\n• Export to PDF/Excel\n• Email to stakeholders');
+        }
+
+        function calculateROI() {
+            const transactions = parseInt(document.getElementById('monthlyTransactions').value) || 0;
+            const time = parseInt(document.getElementById('currentTime').value) || 0;
+            const rate = parseInt(document.getElementById('hourlyRate').value) || 0;
+            
+            // Calculate savings (assuming 75% time reduction)
+            const timeSaved = time * 0.75;
+            const monthlySavings = timeSaved * rate;
+            
+            document.getElementById('roiResult').textContent = `Monthly Savings: $${monthlySavings.toLocaleString()}`;
+        }
+
+        // Initialize ROI calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateROI();
+        });
+    </script>
+</body>
+</html>
