@@ -6,6 +6,7 @@
     <title>FinPro Directory - Find Financial Professionals</title>
     <meta name="description" content="Find certified CPAs, accountants, and tax professionals. AI-powered financial solutions for modern practices.">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/search.js"></script>
     <style>
         * {
             margin: 0;
@@ -426,8 +427,8 @@
             <h1>Find Financial Professionals</h1>
             <p>Connect with certified CPAs, accountants, and tax professionals. Powered by AI technology.</p>
             <div class="search-box">
-                <input type="text" placeholder="Search professionals by location, specialty, or name...">
-                <button class="search-btn">Search</button>
+                <input type="text" id="heroSearchInput" placeholder="Search professionals by location, specialty, or name...">
+                <button class="search-btn" onclick="performHeroSearch()">Search</button>
             </div>
         </div>
     </section>
@@ -580,20 +581,120 @@
             });
         });
 
-        // Search functionality
-        document.querySelector('.search-btn').addEventListener('click', function() {
-            const searchTerm = document.querySelector('.search-box input').value;
+        // Enhanced search functionality
+        function performHeroSearch() {
+            const searchTerm = document.getElementById('heroSearchInput').value;
             if (searchTerm.trim()) {
-                alert('Search functionality coming soon! You searched for: ' + searchTerm);
+                // Use global search system
+                if (window.finproSearch) {
+                    window.finproSearch.performSearch(searchTerm);
+                } else {
+                    // Fallback to professionals page
+                    window.location.href = `/professionals?search=${encodeURIComponent(searchTerm)}`;
+                }
+            }
+        }
+
+        // Add enter key support for search
+        document.getElementById('heroSearchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performHeroSearch();
             }
         });
 
-        // Add enter key support for search
-        document.querySelector('.search-box input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('.search-btn').click();
+        // Add real-time search suggestions
+        document.getElementById('heroSearchInput').addEventListener('input', function(e) {
+            const query = e.target.value;
+            if (query.length >= 2 && window.finproSearch) {
+                // Show suggestions from global search
+                const suggestions = window.finproSearch.getSuggestions(query);
+                if (suggestions.length > 0) {
+                    showHeroSuggestions(suggestions);
+                } else {
+                    hideHeroSuggestions();
+                }
+            } else {
+                hideHeroSuggestions();
             }
         });
+
+        function showHeroSuggestions(suggestions) {
+            let container = document.getElementById('heroSuggestions');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'heroSuggestions';
+                container.className = 'hero-suggestions';
+                document.querySelector('.search-box').appendChild(container);
+            }
+
+            container.innerHTML = suggestions.slice(0, 5).map(suggestion => `
+                <div class="suggestion-item" onclick="selectHeroSuggestion('${suggestion.type}', '${suggestion.data.name || suggestion.data.title}')">
+                    <div class="suggestion-title">${suggestion.title}</div>
+                    <div class="suggestion-subtitle">${suggestion.subtitle}</div>
+                </div>
+            `).join('');
+
+            container.style.display = 'block';
+        }
+
+        function hideHeroSuggestions() {
+            const container = document.getElementById('heroSuggestions');
+            if (container) {
+                container.style.display = 'none';
+            }
+        }
+
+        function selectHeroSuggestion(type, data) {
+            hideHeroSuggestions();
+            document.getElementById('heroSearchInput').value = data;
+            performHeroSearch();
+        }
+
+        // Add CSS for hero suggestions
+        const heroSuggestionsCSS = `
+            <style>
+                .hero-suggestions {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: white;
+                    border-radius: 0 0 15px 15px;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                    max-height: 200px;
+                    overflow-y: auto;
+                    display: none;
+                    z-index: 1000;
+                }
+                
+                .hero-suggestions .suggestion-item {
+                    padding: 1rem;
+                    cursor: pointer;
+                    border-bottom: 1px solid #f0f0f0;
+                    transition: background 0.3s;
+                }
+                
+                .hero-suggestions .suggestion-item:hover {
+                    background: #f8f9fa;
+                }
+                
+                .hero-suggestions .suggestion-item:last-child {
+                    border-bottom: none;
+                }
+                
+                .hero-suggestions .suggestion-title {
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 0.25rem;
+                }
+                
+                .hero-suggestions .suggestion-subtitle {
+                    font-size: 0.9rem;
+                    color: #666;
+                }
+            </style>
+        `;
+        document.head.insertAdjacentHTML('beforeend', heroSuggestionsCSS);
     </script>
 </body>
 </html>

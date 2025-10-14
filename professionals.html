@@ -6,6 +6,7 @@
     <title>Find CPAs & Accountants - FinPro Directory</title>
     <meta name="description" content="Find certified CPAs, accountants, and tax professionals in your area. Browse by location, specialty, and ratings.">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/search.js"></script>
     <style>
         * {
             margin: 0;
@@ -724,8 +725,24 @@
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
+            // Check for URL search parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchParam = urlParams.get('search');
+            
+            if (searchParam) {
+                // Pre-fill search input and perform search
+                document.getElementById('searchInput').value = searchParam;
+                searchProfessionals();
+            }
+            
             displayProfessionals();
             setupEventListeners();
+            
+            // Integrate with global search system
+            if (window.finproSearch) {
+                // Sync with global search data
+                window.finproSearch.searchData.professionals = professionals;
+            }
         });
 
         function setupEventListeners() {
@@ -745,6 +762,11 @@
             const locationFilter = document.getElementById('locationFilter').value;
             const specialtyFilter = document.getElementById('specialtyFilter').value;
             const ratingFilter = document.getElementById('ratingFilter').value;
+
+            // Track search analytics
+            if (window.finproSearch && searchTerm) {
+                window.finproSearch.trackSearchEvent('professionals_search', 'professionals', searchTerm);
+            }
 
             filteredProfessionals = professionals.filter(professional => {
                 // Search term filter
