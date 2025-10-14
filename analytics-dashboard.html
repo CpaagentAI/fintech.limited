@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Analytics Dashboard - FinPro Directory</title>
+    <meta name="description" content="Advanced lead analytics dashboard for tracking lead generation, conversion rates, and performance metrics.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/search.js"></script>
+    <script src="/lead-generation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Dashboard Controls */
+        .dashboard-controls {
+            background: white;
+            padding: 2rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .controls-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .date-range {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .export-btn {
+            background: #28a745;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .export-btn:hover {
+            background: #218838;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .metric-change {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .change-positive {
+            color: #28a745;
+        }
+
+        .change-negative {
+            color: #dc3545;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Lead Table */
+        .leads-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .leads-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .leads-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .leads-table th,
+        .leads-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .leads-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .leads-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .lead-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-hot {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-warm {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-qualified {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-cold {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .lead-score {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Lead Sources */
+        .sources-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .source-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .source-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .source-count {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Conversion Funnel */
+        .funnel-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .funnel-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .funnel-step {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .step-info {
+            flex: 1;
+        }
+
+        .step-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .step-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .step-percentage {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .leads-table {
+                font-size: 0.9rem;
+            }
+
+            .leads-table th,
+            .leads-table td {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">FinPro Directory</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/professionals">Professionals</a></li>
+                <li><a href="/services">AI Solutions</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+        <div class="container">
+            <h1>Lead Analytics Dashboard</h1>
+            <p>Track lead generation, conversion rates, and performance metrics</p>
+        </div>
+    </section>
+
+    <!-- Dashboard Controls -->
+    <section class="dashboard-controls">
+        <div class="container">
+            <div class="controls-container">
+                <div class="date-range">
+                    <label for="startDate">From:</label>
+                    <input type="date" id="startDate" class="date-input">
+                    <label for="endDate">To:</label>
+                    <input type="date" id="endDate" class="date-input">
+                    <button id="updateDashboard" class="export-btn">Update Dashboard</button>
+                </div>
+                <div>
+                    <button id="exportLeads" class="export-btn">Export Leads</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Grid -->
+    <section class="container">
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">👥</div>
+                <div class="metric-value" id="totalLeads">0</div>
+                <div class="metric-label">Total Leads</div>
+                <div class="metric-change change-positive">+12% vs last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔥</div>
+                <div class="metric-value" id="hotLeads">0</div>
+                <div class="metric-label">Hot Leads</div>
+                <div class="metric-change change-positive">+8% vs last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📈</div>
+                <div class="metric-value" id="conversionRate">0%</div>
+                <div class="metric-label">Conversion Rate</div>
+                <div class="metric-change change-positive">+3% vs last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">💰</div>
+                <div class="metric-value" id="avgScore">0</div>
+                <div class="metric-label">Average Score</div>
+                <div class="metric-change change-positive">+5 points vs last month</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3>Lead Generation Trend</h3>
+                <div class="chart-wrapper">
+                    <canvas id="leadsChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3>Lead Sources</h3>
+                <div class="chart-wrapper">
+                    <canvas id="sourcesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lead Sources -->
+        <div class="sources-section">
+            <h3>Lead Sources Performance</h3>
+            <div class="sources-grid" id="sourcesGrid">
+                <!-- Sources will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Conversion Funnel -->
+        <div class="funnel-section">
+            <h3>Conversion Funnel</h3>
+            <div class="funnel-steps" id="funnelSteps">
+                <!-- Funnel steps will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Leads Table -->
+        <div class="leads-section">
+            <h3>Recent Leads</h3>
+            <table class="leads-table" id="leadsTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Company</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                        <th>Source</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="leadsTableBody">
+                    <!-- Leads will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        // Lead Analytics Dashboard
+        class LeadAnalyticsDashboard {
+            constructor() {
+                this.leads = [];
+                this.analytics = {};
+                this.charts = {};
+                
+                this.init();
+            }
+
+            init() {
+                this.loadData();
+                this.setupEventListeners();
+                this.updateDashboard();
+            }
+
+            loadData() {
+                // Load leads from localStorage
+                this.leads = JSON.parse(localStorage.getItem('finpro_leads') || '[]');
+                this.analytics = JSON.parse(localStorage.getItem('finpro_lead_analytics') || '{}');
+                
+                // Generate sample data if none exists
+                if (this.leads.length === 0) {
+                    this.generateSampleData();
+                }
+            }
+
+            generateSampleData() {
+                const sampleLeads = [
+                    {
+                        firstName: 'John',
+                        lastName: 'Smith',
+                        email: 'john.smith@techcorp.com',
+                        company: 'TechCorp Inc',
+                        companySize: 'large',
+                        industry: 'technology',
+                        budget: '100k-plus',
+                        timeline: 'immediate',
+                        score: 85,
+                        status: 'hot',
+                        source: 'search',
+                        timestamp: new Date(Date.now() - 86400000).toISOString(),
+                        interests: ['bookkeeping', 'analytics']
+                    },
+                    {
+                        firstName: 'Sarah',
+                        lastName: 'Johnson',
+                        email: 'sarah.j@manufacturing.com',
+                        company: 'Manufacturing Co',
+                        companySize: 'medium',
+                        industry: 'manufacturing',
+                        budget: '50k-100k',
+                        timeline: '3-6-months',
+                        score: 72,
+                        status: 'warm',
+                        source: 'referral',
+                        timestamp: new Date(Date.now() - 172800000).toISOString(),
+                        interests: ['payroll', 'audit']
+                    },
+                    {
+                        firstName: 'Mike',
+                        lastName: 'Davis',
+                        email: 'mike.davis@retail.com',
+                        company: 'Retail Solutions',
+                        companySize: 'small',
+                        industry: 'retail',
+                        budget: '10k-50k',
+                        timeline: '6-plus-months',
+                        score: 45,
+                        status: 'qualified',
+                        source: 'direct',
+                        timestamp: new Date(Date.now() - 259200000).toISOString(),
+                        interests: ['bookkeeping']
+                    },
+                    {
+                        firstName: 'Lisa',
+                        lastName: 'Wilson',
+                        email: 'lisa.wilson@healthcare.com',
+                        company: 'Healthcare Partners',
+                        companySize: 'large',
+                        industry: 'healthcare',
+                        budget: '100k-plus',
+                        timeline: '1-3-months',
+                        score: 78,
+                        status: 'warm',
+                        source: 'social',
+                        timestamp: new Date(Date.now() - 345600000).toISOString(),
+                        interests: ['analytics', 'audit']
+                    },
+                    {
+                        firstName: 'David',
+                        lastName: 'Brown',
+                        email: 'david.brown@finance.com',
+                        company: 'Finance Group',
+                        companySize: 'medium',
+                        industry: 'finance',
+                        budget: '50k-100k',
+                        timeline: 'immediate',
+                        score: 92,
+                        status: 'hot',
+                        source: 'search',
+                        timestamp: new Date(Date.now() - 432000000).toISOString(),
+                        interests: ['bookkeeping', 'payroll', 'analytics']
+                    }
+                ];
+
+                this.leads = sampleLeads;
+                localStorage.setItem('finpro_leads', JSON.stringify(this.leads));
+            }
+
+            setupEventListeners() {
+                document.getElementById('updateDashboard').addEventListener('click', () => {
+                    this.updateDashboard();
+                });
+
+                document.getElementById('exportLeads').addEventListener('click', () => {
+                    this.exportLeads();
+                });
+
+                // Set default date range
+                const endDate = new Date();
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() - 30);
+
+                document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+                document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
+            }
+
+            updateDashboard() {
+                this.updateMetrics();
+                this.updateCharts();
+                this.updateSources();
+                this.updateFunnel();
+                this.updateLeadsTable();
+            }
+
+            updateMetrics() {
+                const totalLeads = this.leads.length;
+                const hotLeads = this.leads.filter(lead => lead.status === 'hot').length;
+                const conversionRate = totalLeads > 0 ? Math.round((hotLeads / totalLeads) * 100) : 0;
+                const avgScore = totalLeads > 0 ? Math.round(this.leads.reduce((sum, lead) => sum + lead.score, 0) / totalLeads) : 0;
+
+                document.getElementById('totalLeads').textContent = totalLeads;
+                document.getElementById('hotLeads').textContent = hotLeads;
+                document.getElementById('conversionRate').textContent = conversionRate + '%';
+                document.getElementById('avgScore').textContent = avgScore;
+            }
+
+            updateCharts() {
+                this.createLeadsChart();
+                this.createSourcesChart();
+            }
+
+            createLeadsChart() {
+                const ctx = document.getElementById('leadsChart').getContext('2d');
+                
+                // Generate last 7 days data
+                const last7Days = [];
+                const leadsData = [];
+                
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    last7Days.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                    
+                    const dayLeads = this.leads.filter(lead => {
+                        const leadDate = new Date(lead.timestamp);
+                        return leadDate.toDateString() === date.toDateString();
+                    }).length;
+                    
+                    leadsData.push(dayLeads);
+                }
+
+                if (this.charts.leads) {
+                    this.charts.leads.destroy();
+                }
+
+                this.charts.leads = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: last7Days,
+                        datasets: [{
+                            label: 'Leads Generated',
+                            data: leadsData,
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            createSourcesChart() {
+                const ctx = document.getElementById('sourcesChart').getContext('2d');
+                
+                // Count leads by source
+                const sourceCounts = {};
+                this.leads.forEach(lead => {
+                    sourceCounts[lead.source] = (sourceCounts[lead.source] || 0) + 1;
+                });
+
+                const sources = Object.keys(sourceCounts);
+                const counts = Object.values(sourceCounts);
+
+                if (this.charts.sources) {
+                    this.charts.sources.destroy();
+                }
+
+                this.charts.sources = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: sources,
+                        datasets: [{
+                            data: counts,
+                            backgroundColor: [
+                                '#667eea',
+                                '#e83e8c',
+                                '#28a745',
+                                '#ffc107',
+                                '#dc3545'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            updateSources() {
+                const sourceCounts = {};
+                this.leads.forEach(lead => {
+                    sourceCounts[lead.source] = (sourceCounts[lead.source] || 0) + 1;
+                });
+
+                const sourcesGrid = document.getElementById('sourcesGrid');
+                sourcesGrid.innerHTML = '';
+
+                Object.entries(sourceCounts).forEach(([source, count]) => {
+                    const sourceItem = document.createElement('div');
+                    sourceItem.className = 'source-item';
+                    sourceItem.innerHTML = `
+                        <div class="source-name">${source.charAt(0).toUpperCase() + source.slice(1)}</div>
+                        <div class="source-count">${count}</div>
+                    `;
+                    sourcesGrid.appendChild(sourceItem);
+                });
+            }
+
+            updateFunnel() {
+                const funnelSteps = [
+                    { name: 'Website Visitors', count: 1000, percentage: 100 },
+                    { name: 'Form Views', count: 500, percentage: 50 },
+                    { name: 'Form Submissions', count: 100, percentage: 20 },
+                    { name: 'Qualified Leads', count: 75, percentage: 15 },
+                    { name: 'Hot Leads', count: 25, percentage: 5 }
+                ];
+
+                const funnelStepsContainer = document.getElementById('funnelSteps');
+                funnelStepsContainer.innerHTML = '';
+
+                funnelSteps.forEach((step, index) => {
+                    const stepDiv = document.createElement('div');
+                    stepDiv.className = 'funnel-step';
+                    stepDiv.innerHTML = `
+                        <div class="step-number">${index + 1}</div>
+                        <div class="step-info">
+                            <div class="step-name">${step.name}</div>
+                            <div class="step-count">${step.count} leads</div>
+                        </div>
+                        <div class="step-percentage">${step.percentage}%</div>
+                    `;
+                    funnelStepsContainer.appendChild(stepDiv);
+                });
+            }
+
+            updateLeadsTable() {
+                const tableBody = document.getElementById('leadsTableBody');
+                tableBody.innerHTML = '';
+
+                // Sort leads by timestamp (newest first)
+                const sortedLeads = [...this.leads].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                sortedLeads.slice(0, 10).forEach(lead => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${lead.firstName} ${lead.lastName}</td>
+                        <td>${lead.email}</td>
+                        <td>${lead.company || 'N/A'}</td>
+                        <td class="lead-score">${lead.score}</td>
+                        <td><span class="lead-status status-${lead.status}">${lead.status}</span></td>
+                        <td>${lead.source}</td>
+                        <td>${new Date(lead.timestamp).toLocaleDateString()}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            exportLeads() {
+                if (window.leadGenerationSystem) {
+                    window.leadGenerationSystem.exportLeads();
+                } else {
+                    // Fallback export
+                    const csvContent = this.convertToCSV(this.leads);
+                    this.downloadCSV(csvContent, 'finpro_leads.csv');
+                }
+            }
+
+            convertToCSV(data) {
+                if (data.length === 0) return '';
+                
+                const headers = Object.keys(data[0]);
+                const csvRows = [headers.join(',')];
+                
+                data.forEach(row => {
+                    const values = headers.map(header => {
+                        const value = row[header] || '';
+                        return `"${value.toString().replace(/"/g, '""')}"`;
+                    });
+                    csvRows.push(values.join(','));
+                });
+                
+                return csvRows.join('\n');
+            }
+
+            downloadCSV(content, filename) {
+                const blob = new Blob([content], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        }
+
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            new LeadAnalyticsDashboard();
+        });
+    </script>
+</body>
+</html>
