@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Financial Solutions - FinPro Directory</title>
+    <meta name="description" content="Discover our AI-powered financial solutions: Automated Bookkeeping, Smart Payroll, Audit Assistant, and Financial Analytics.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Services Grid */
+        .services-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .pricing {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .price-period {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .demo-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .demo-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            background: white;
+            padding: 4rem 0;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .demo-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .demo-content p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .demo-features {
+            list-style: none;
+        }
+
+        .demo-features li {
+            padding: 0.75rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .demo-features li:before {
+            content: "🤖";
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .demo-iframe {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-placeholder {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            padding: 0.5rem 0;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Quick Links */
+        .quick-links {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        .quick-links a {
+            display: block;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .quick-links a:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Quick Links -->
+    <div class="quick-links">
+        <a href="/">Home</a>
+        <a href="/professionals">Professionals</a>
+        <a href="/presentation">Pitch Deck</a>
+        <a href="/contact">Contact</a>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">FinPro Directory</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/professionals">Professionals</a></li>
+                <li><a href="/services">AI Solutions</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AI-Powered Financial Solutions</h1>
+            <p>Transform your practice with cutting-edge artificial intelligence. Streamline operations, improve accuracy, and serve more clients effectively.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">Our AI Solutions</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Automated Bookkeeping</h3>
+                    <p>AI-powered system that automatically categorizes transactions and reconciles accounts with machine learning accuracy.</p>
+                    <ul class="features-list">
+                        <li>Automatic transaction categorization</li>
+                        <li>Real-time account reconciliation</li>
+                        <li>Machine learning accuracy</li>
+                        <li>Integration with major banks</li>
+                        <li>Custom rule creation</li>
+                        <li>Exception handling</li>
+                    </ul>
+                    <div class="pricing">
+                        <div class="price">$299<span class="price-period">/month</span></div>
+                    </div>
+                    <button class="demo-btn" onclick="showDemo('bookkeeping')">Try Demo</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
+                    <h3>Smart Payroll Management</h3>
+                    <p>Intelligent payroll processing with tax calculations and compliance checks for businesses of all sizes.</p>
+                    <ul class="features-list">
+                        <li>Automated tax calculations</li>
+                        <li>Compliance monitoring</li>
+                        <li>Direct deposit processing</li>
+                        <li>Employee self-service portal</li>
+                        <li>Multi-state tax handling</li>
+                        <li>Year-end reporting</li>
+                    </ul>
+                    <div class="pricing">
+                        <div class="price">$199<span class="price-period">/month</span></div>
+                    </div>
+                    <button class="demo-btn" onclick="showDemo('payroll')">Try Demo</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>Audit Assistant</h3>
+                    <p>AI tool that helps identify potential audit risks and prepares documentation for seamless compliance.</p>
+                    <ul class="features-list">
+                        <li>Risk assessment algorithms</li>
+                        <li>Document preparation</li>
+                        <li>Compliance monitoring</li>
+                        <li>Audit trail generation</li>
+                        <li>Exception reporting</li>
+                        <li>Regulatory updates</li>
+                    </ul>
+                    <div class="pricing">
+                        <div class="price">$399<span class="price-period">/month</span></div>
+                    </div>
+                    <button class="demo-btn" onclick="showDemo('audit')">Try Demo</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Financial Analytics</h3>
+                    <p>Advanced analytics and reporting powered by machine learning for data-driven business decisions.</p>
+                    <ul class="features-list">
+                        <li>Predictive analytics</li>
+                        <li>Custom dashboards</li>
+                        <li>Trend analysis</li>
+                        <li>Performance metrics</li>
+                        <li>Automated reporting</li>
+                        <li>Data visualization</li>
+                    </ul>
+                    <div class="pricing">
+                        <div class="price">$249<span class="price-period">/month</span></div>
+                    </div>
+                    <button class="demo-btn" onclick="showDemo('analytics')">Try Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section">
+        <div class="container">
+            <div class="demo-container">
+                <div class="demo-content">
+                    <h2>See AI in Action</h2>
+                    <p>Experience our AI-powered solutions with interactive demos. See how artificial intelligence can transform your financial practice.</p>
+                    <ul class="demo-features">
+                        <li>Real-time transaction processing</li>
+                        <li>Intelligent error detection</li>
+                        <li>Automated compliance checking</li>
+                        <li>Predictive analytics insights</li>
+                        <li>Custom workflow automation</li>
+                    </ul>
+                </div>
+                <div class="demo-iframe">
+                    <div class="demo-placeholder" id="demoContent">
+                        <h3>Select a Demo Above</h3>
+                        <p>Choose from our AI solutions to see them in action</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Practice?</h2>
+            <p>Join thousands of financial professionals who have already revolutionized their workflow with AI.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn-primary">Get Started Today</a>
+                <a href="/presentation" class="btn-secondary">View Full Presentation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI Solutions</h3>
+                    <ul>
+                        <li><a href="#bookkeeping">Automated Bookkeeping</a></li>
+                        <li><a href="#payroll">Smart Payroll</a></li>
+                        <li><a href="#audit">Audit Assistant</a></li>
+                        <li><a href="#analytics">Financial Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/presentation">Presentation</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Patriot Tax Services Ltd</li>
+                        <li>Atlanta, GA</li>
+                        <li>Phone: +1-470-596-1308</li>
+                        <li>Email: info@cpaai.net</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FinPro Directory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showDemo(solution) {
+            const demoContent = document.getElementById('demoContent');
+            
+            const demos = {
+                bookkeeping: `
+                    <h3>🤖 Automated Bookkeeping Demo</h3>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4>Sample Transaction Processing:</h4>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Office Supplies - Staples</span>
+                            <span style="color: #28a745;">✓ Categorized</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Client Payment - ABC Corp</span>
+                            <span style="color: #28a745;">✓ Reconciled</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Bank Fee - Monthly</span>
+                            <span style="color: #ffc107;">⚠ Review Needed</span>
+                        </div>
+                    </div>
+                    <p><strong>Accuracy:</strong> 98.7% automatic categorization</p>
+                    <p><strong>Time Saved:</strong> 15 hours per week</p>
+                `,
+                payroll: `
+                    <h3>💰 Smart Payroll Demo</h3>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4>Payroll Processing:</h4>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Federal Tax Calculation</span>
+                            <span style="color: #28a745;">✓ Automated</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>State Tax (GA)</span>
+                            <span style="color: #28a745;">✓ Calculated</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Direct Deposit</span>
+                            <span style="color: #28a745;">✓ Processed</span>
+                        </div>
+                    </div>
+                    <p><strong>Compliance:</strong> 100% accuracy rate</p>
+                    <p><strong>Processing Time:</strong> 2 minutes vs 2 hours</p>
+                `,
+                audit: `
+                    <h3>🔍 Audit Assistant Demo</h3>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4>Risk Assessment:</h4>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Revenue Recognition</span>
+                            <span style="color: #28a745;">Low Risk</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Expense Documentation</span>
+                            <span style="color: #ffc107;">Medium Risk</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Cash Flow Analysis</span>
+                            <span style="color: #28a745;">Low Risk</span>
+                        </div>
+                    </div>
+                    <p><strong>Risk Detection:</strong> 95% accuracy</p>
+                    <p><strong>Documentation:</strong> Auto-generated</p>
+                `,
+                analytics: `
+                    <h3>📊 Financial Analytics Demo</h3>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4>Key Metrics:</h4>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Revenue Growth</span>
+                            <span style="color: #28a745;">+12.5%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Profit Margin</span>
+                            <span style="color: #28a745;">23.8%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                            <span>Cash Flow Forecast</span>
+                            <span style="color: #667eea;">+8.2% (Next Q)</span>
+                        </div>
+                    </div>
+                    <p><strong>Predictive Accuracy:</strong> 92%</p>
+                    <p><strong>Insights Generated:</strong> 15 per day</p>
+                `
+            };
+
+            demoContent.innerHTML = demos[solution];
+        }
+
+        // Initialize with bookkeeping demo
+        document.addEventListener('DOMContentLoaded', function() {
+            showDemo('bookkeeping');
+        });
+    </script>
+</body>
+</html>
