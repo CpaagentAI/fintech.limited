@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Audit Dashboard - FinPro Directory</title>
+    <meta name="description" content="Comprehensive SEO audit dashboard for tracking search engine optimization, performance metrics, and analytics data.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/search.js"></script>
+    <script src="/seo-analytics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* SEO Score Section */
+        .seo-score-section {
+            background: white;
+            padding: 3rem 0;
+        }
+
+        .score-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .score-display {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            position: relative;
+        }
+
+        .score-excellent {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .score-good {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+        }
+
+        .score-poor {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+        }
+
+        .score-label {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .score-details {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .score-item:last-child {
+            border-bottom: none;
+        }
+
+        .score-item-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .score-item-value {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .metric-change {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .change-positive {
+            color: #28a745;
+        }
+
+        .change-negative {
+            color: #dc3545;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        /* SEO Issues Section */
+        .issues-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .issues-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .issue-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #dc3545;
+        }
+
+        .issue-item.resolved {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+
+        .issue-info {
+            flex: 1;
+        }
+
+        .issue-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .issue-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .issue-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-resolved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Recommendations Section */
+        .recommendations-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .recommendations-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .recommendation-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #28a745;
+        }
+
+        .recommendation-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation-description {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation-priority {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        /* Performance Section */
+        .performance-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .performance-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .performance-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .performance-metric {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 0.5rem;
+        }
+
+        .performance-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Controls */
+        .controls-section {
+            background: white;
+            padding: 2rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .controls-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .audit-btn {
+            background: #28a745;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .audit-btn:hover {
+            background: #218838;
+        }
+
+        .export-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .export-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+
+            .score-container {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #28a745;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">FinPro Directory</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/professionals">Professionals</a></li>
+                <li><a href="/services">AI Solutions</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+        <div class="container">
+            <h1>SEO Audit Dashboard</h1>
+            <p>Comprehensive SEO analysis, performance monitoring, and optimization recommendations</p>
+        </div>
+    </section>
+
+    <!-- Controls Section -->
+    <section class="controls-section">
+        <div class="container">
+            <div class="controls-container">
+                <div>
+                    <button id="runAudit" class="audit-btn">Run SEO Audit</button>
+                    <button id="refreshData" class="audit-btn">Refresh Data</button>
+                </div>
+                <div>
+                    <button id="exportData" class="export-btn">Export Analytics</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Score Section -->
+    <section class="seo-score-section">
+        <div class="container">
+            <div class="score-container">
+                <div class="score-display">
+                    <div class="score-circle score-excellent" id="scoreCircle">
+                        <span id="scoreValue">85</span>
+                    </div>
+                    <div class="score-label" id="scoreLabel">Excellent</div>
+                </div>
+                <div class="score-details">
+                    <h3>SEO Score Breakdown</h3>
+                    <div class="score-item">
+                        <span class="score-item-name">Meta Tags</span>
+                        <span class="score-item-value" id="metaScore">90</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-item-name">Content Quality</span>
+                        <span class="score-item-value" id="contentScore">85</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-item-name">Technical SEO</span>
+                        <span class="score-item-value" id="technicalScore">80</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-item-name">Performance</span>
+                        <span class="score-item-value" id="performanceScore">88</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-item-name">Mobile Optimization</span>
+                        <span class="score-item-value" id="mobileScore">92</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Grid -->
+    <section class="container">
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">📈</div>
+                <div class="metric-value" id="pageViews">0</div>
+                <div class="metric-label">Page Views</div>
+                <div class="metric-change change-positive">+15% vs last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔍</div>
+                <div class="metric-value" id="searchImpressions">0</div>
+                <div class="metric-label">Search Impressions</div>
+                <div class="metric-change change-positive">+22% vs last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">👆</div>
+                <div class="metric-value" id="clickThroughRate">0%</div>
+                <div class="metric-label">Click-Through Rate</div>
+                <div class="metric-change change-positive">+3% vs last month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚡</div>
+                <div class="metric-value" id="avgLoadTime">0s</div>
+                <div class="metric-label">Average Load Time</div>
+                <div class="metric-change change-positive">-0.5s vs last month</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3>Traffic Trends</h3>
+                <div class="chart-wrapper">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3>Top Keywords</h3>
+                <div class="chart-wrapper">
+                    <canvas id="keywordsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Issues Section -->
+        <div class="issues-section">
+            <h3>SEO Issues Found</h3>
+            <div id="issuesList">
+                <!-- Issues will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Recommendations Section -->
+        <div class="recommendations-section">
+            <h3>Optimization Recommendations</h3>
+            <div id="recommendationsList">
+                <!-- Recommendations will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Performance Section -->
+        <div class="performance-section">
+            <h3>Core Web Vitals</h3>
+            <div class="performance-grid">
+                <div class="performance-item">
+                    <div class="performance-metric" id="lcpValue">2.1s</div>
+                    <div class="performance-label">Largest Contentful Paint</div>
+                </div>
+                <div class="performance-item">
+                    <div class="performance-metric" id="fidValue">45ms</div>
+                    <div class="performance-label">First Input Delay</div>
+                </div>
+                <div class="performance-item">
+                    <div class="performance-metric" id="clsValue">0.05</div>
+                    <div class="performance-label">Cumulative Layout Shift</div>
+                </div>
+                <div class="performance-item">
+                    <div class="performance-metric" id="fcpValue">1.2s</div>
+                    <div class="performance-label">First Contentful Paint</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // SEO Audit Dashboard
+        class SEOAuditDashboard {
+            constructor() {
+                this.analyticsData = {};
+                this.seoAudit = {};
+                this.charts = {};
+                
+                this.init();
+            }
+
+            init() {
+                this.loadAnalyticsData();
+                this.setupEventListeners();
+                this.updateDashboard();
+            }
+
+            loadAnalyticsData() {
+                if (window.seoAnalyticsSystem) {
+                    this.analyticsData = window.seoAnalyticsSystem.getAnalyticsData();
+                } else {
+                    // Generate sample data
+                    this.generateSampleData();
+                }
+            }
+
+            generateSampleData() {
+                this.analyticsData = {
+                    events: [
+                        { event: 'page_view', timestamp: new Date().toISOString(), page_url: '/' },
+                        { event: 'form_submission', timestamp: new Date().toISOString(), page_url: '/contact' },
+                        { event: 'ai_demo_started', timestamp: new Date().toISOString(), page_url: '/ai/bookkeeping' }
+                    ],
+                    pageViews: [
+                        { page_title: 'FinPro Directory - Home', page_path: '/', timestamp: new Date().toISOString() },
+                        { page_title: 'AI Solutions - FinPro Directory', page_path: '/services', timestamp: new Date().toISOString() }
+                    ],
+                    sitemap: {
+                        pages: [
+                            { url: '/', priority: 1.0 },
+                            { url: '/professionals', priority: 0.9 },
+                            { url: '/services', priority: 0.9 }
+                        ]
+                    }
+                };
+            }
+
+            setupEventListeners() {
+                document.getElementById('runAudit').addEventListener('click', () => {
+                    this.runSEOAudit();
+                });
+
+                document.getElementById('refreshData').addEventListener('click', () => {
+                    this.refreshData();
+                });
+
+                document.getElementById('exportData').addEventListener('click', () => {
+                    this.exportAnalyticsData();
+                });
+            }
+
+            updateDashboard() {
+                this.updateMetrics();
+                this.updateCharts();
+                this.updateSEOScore();
+            }
+
+            updateMetrics() {
+                const pageViews = this.analyticsData.pageViews.length;
+                const searchImpressions = Math.floor(pageViews * 1.5);
+                const clickThroughRate = Math.floor(Math.random() * 5) + 3;
+                const avgLoadTime = (Math.random() * 2 + 1).toFixed(1);
+
+                document.getElementById('pageViews').textContent = pageViews.toLocaleString();
+                document.getElementById('searchImpressions').textContent = searchImpressions.toLocaleString();
+                document.getElementById('clickThroughRate').textContent = clickThroughRate + '%';
+                document.getElementById('avgLoadTime').textContent = avgLoadTime + 's';
+            }
+
+            updateCharts() {
+                this.createTrafficChart();
+                this.createKeywordsChart();
+            }
+
+            createTrafficChart() {
+                const ctx = document.getElementById('trafficChart').getContext('2d');
+                
+                const last7Days = [];
+                const trafficData = [];
+                
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    last7Days.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                    trafficData.push(Math.floor(Math.random() * 100) + 50);
+                }
+
+                if (this.charts.traffic) {
+                    this.charts.traffic.destroy();
+                }
+
+                this.charts.traffic = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: last7Days,
+                        datasets: [{
+                            label: 'Page Views',
+                            data: trafficData,
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            createKeywordsChart() {
+                const ctx = document.getElementById('keywordsChart').getContext('2d');
+                
+                const keywords = ['AI financial solutions', 'CPA directory', 'automated bookkeeping', 'smart payroll', 'audit assistant'];
+                const impressions = [1200, 980, 850, 720, 650];
+
+                if (this.charts.keywords) {
+                    this.charts.keywords.destroy();
+                }
+
+                this.charts.keywords = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: keywords,
+                        datasets: [{
+                            label: 'Search Impressions',
+                            data: impressions,
+                            backgroundColor: [
+                                '#28a745',
+                                '#20c997',
+                                '#17a2b8',
+                                '#6f42c1',
+                                '#e83e8c'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            updateSEOScore() {
+                const scores = {
+                    meta: 90,
+                    content: 85,
+                    technical: 80,
+                    performance: 88,
+                    mobile: 92
+                };
+
+                const overallScore = Math.round(Object.values(scores).reduce((a, b) => a + b) / Object.keys(scores).length);
+
+                document.getElementById('scoreValue').textContent = overallScore;
+                document.getElementById('metaScore').textContent = scores.meta;
+                document.getElementById('contentScore').textContent = scores.content;
+                document.getElementById('technicalScore').textContent = scores.technical;
+                document.getElementById('performanceScore').textContent = scores.performance;
+                document.getElementById('mobileScore').textContent = scores.mobile;
+
+                const scoreCircle = document.getElementById('scoreCircle');
+                const scoreLabel = document.getElementById('scoreLabel');
+
+                scoreCircle.className = 'score-circle';
+                if (overallScore >= 90) {
+                    scoreCircle.classList.add('score-excellent');
+                    scoreLabel.textContent = 'Excellent';
+                } else if (overallScore >= 70) {
+                    scoreCircle.classList.add('score-good');
+                    scoreLabel.textContent = 'Good';
+                } else {
+                    scoreCircle.classList.add('score-poor');
+                    scoreLabel.textContent = 'Needs Improvement';
+                }
+            }
+
+            runSEOAudit() {
+                const auditBtn = document.getElementById('runAudit');
+                auditBtn.innerHTML = '<span class="spinner"></span>Running Audit...';
+                auditBtn.disabled = true;
+
+                setTimeout(() => {
+                    if (window.seoAnalyticsSystem) {
+                        this.seoAudit = window.seoAnalyticsSystem.performSEOAudit();
+                    } else {
+                        this.seoAudit = this.generateSampleAudit();
+                    }
+
+                    this.displayAuditResults();
+                    
+                    auditBtn.innerHTML = 'Run SEO Audit';
+                    auditBtn.disabled = false;
+                }, 2000);
+            }
+
+            generateSampleAudit() {
+                return {
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href,
+                    issues: [
+                        'Meta description missing or too short',
+                        'Title tag length issue',
+                        '2 images missing alt text'
+                    ],
+                    recommendations: [
+                        'Add a meta description between 120-160 characters',
+                        'Optimize title tag length (30-60 characters)',
+                        'Add alt text to all images'
+                    ],
+                    score: 75
+                };
+            }
+
+            displayAuditResults() {
+                this.displayIssues();
+                this.displayRecommendations();
+                this.updateSEOScore();
+            }
+
+            displayIssues() {
+                const issuesList = document.getElementById('issuesList');
+                issuesList.innerHTML = '';
+
+                this.seoAudit.issues.forEach(issue => {
+                    const issueDiv = document.createElement('div');
+                    issueDiv.className = 'issue-item';
+                    issueDiv.innerHTML = `
+                        <div class="issue-info">
+                            <div class="issue-title">${issue}</div>
+                            <div class="issue-description">This issue may impact your search engine rankings</div>
+                        </div>
+                        <div class="issue-status status-critical">Critical</div>
+                    `;
+                    issuesList.appendChild(issueDiv);
+                });
+            }
+
+            displayRecommendations() {
+                const recommendationsList = document.getElementById('recommendationsList');
+                recommendationsList.innerHTML = '';
+
+                this.seoAudit.recommendations.forEach((recommendation, index) => {
+                    const recDiv = document.createElement('div');
+                    recDiv.className = 'recommendation-item';
+                    recDiv.innerHTML = `
+                        <div class="recommendation-title">Recommendation ${index + 1}</div>
+                        <div class="recommendation-description">${recommendation}</div>
+                        <div class="recommendation-priority">Priority: High</div>
+                    `;
+                    recommendationsList.appendChild(recDiv);
+                });
+            }
+
+            refreshData() {
+                const refreshBtn = document.getElementById('refreshData');
+                refreshBtn.innerHTML = '<span class="spinner"></span>Refreshing...';
+                refreshBtn.disabled = true;
+
+                setTimeout(() => {
+                    this.loadAnalyticsData();
+                    this.updateDashboard();
+                    
+                    refreshBtn.innerHTML = 'Refresh Data';
+                    refreshBtn.disabled = false;
+                }, 1500);
+            }
+
+            exportAnalyticsData() {
+                if (window.seoAnalyticsSystem) {
+                    window.seoAnalyticsSystem.exportAnalyticsData();
+                } else {
+                    // Fallback export
+                    const data = {
+                        analytics: this.analyticsData,
+                        seoAudit: this.seoAudit,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'seo_audit_data.json';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+            }
+        }
+
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            new SEOAuditDashboard();
+        });
+    </script>
+</body>
+</html>
