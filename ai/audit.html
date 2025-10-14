@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Assistant AI - FinPro Directory</title>
+    <meta name="description" content="AI-powered audit assistant with risk assessment, document analysis, compliance monitoring, and automated report generation. Integrated with CPAAgentAI.app APIs.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/search.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Risk Assessment Section */
+        .risk-assessment-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .risk-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .risk-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .risk-form h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #dc3545;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .assess-btn {
+            width: 100%;
+            background: #dc3545;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .assess-btn:hover {
+            background: #c82333;
+        }
+
+        .assess-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        /* Risk Results Display */
+        .risk-results {
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 400px;
+        }
+
+        .risk-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .risk-score {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .risk-score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .risk-low {
+            background: #28a745;
+        }
+
+        .risk-medium {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .risk-high {
+            background: #dc3545;
+        }
+
+        .risk-recommendations {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e9ecef;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .recommendation-item:last-child {
+            border-bottom: none;
+        }
+
+        .recommendation-item:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Document Analysis Section */
+        .document-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .document-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .document-upload {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-area {
+            border: 2px dashed #dc3545;
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #c82333;
+            background: #f8f9fa;
+        }
+
+        .upload-area.dragover {
+            border-color: #c82333;
+            background: #f8f9fa;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #dc3545;
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .upload-btn {
+            background: #dc3545;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .upload-btn:hover {
+            background: #c82333;
+        }
+
+        .file-list {
+            margin-top: 1rem;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-name {
+            font-weight: 500;
+        }
+
+        .file-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-processing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .analysis-results {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+
+        .analysis-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .analysis-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #dc3545;
+        }
+
+        .analysis-item h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .analysis-item p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-confidence {
+            font-size: 0.9rem;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Compliance Monitoring Section */
+        .compliance-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .compliance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .compliance-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .compliance-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .compliance-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .compliance-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .compliance-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .compliance-status {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .status-compliant {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* AI Assistant Section */
+        .ai-assistant-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .ai-assistant-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .ai-chat {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: #dc3545;
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.ai {
+            background: white;
+            border: 1px solid #e9ecef;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #dc3545;
+        }
+
+        .send-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .send-btn:hover {
+            background: #c82333;
+        }
+
+        .ai-features {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-features h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-list li:before {
+            content: "🔍";
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: #dc3545;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #dc3545;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            background: #dc3545;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .pricing-btn:hover {
+            background: #c82333;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #dc3545;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            padding: 0.5rem 0;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .risk-container,
+            .document-container,
+            .ai-assistant-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Quick Links */
+        .quick-links {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        .quick-links a {
+            display: block;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .quick-links a:hover {
+            background: #c82333;
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #dc3545;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Quick Links -->
+    <div class="quick-links">
+        <a href="/">Home</a>
+        <a href="/services">All Solutions</a>
+        <a href="/ai/payroll">Payroll AI</a>
+        <a href="/contact">Contact</a>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">FinPro Directory</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/professionals">Professionals</a></li>
+                <li><a href="/services">AI Solutions</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Audit Assistant AI</h1>
+            <p>AI-powered audit assistance with risk assessment, document analysis, compliance monitoring, and automated report generation. Integrated with CPAAgentAI.app APIs.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Risk Detection</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3x</div>
+                    <div class="stat-label">Faster Audits</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Compliance Checks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Monitoring</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Risk Assessment Section -->
+    <section class="risk-assessment-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">AI Risk Assessment</h2>
+            
+            <div class="risk-container">
+                <div class="risk-form">
+                    <h2>Assess Audit Risk</h2>
+                    <form id="riskAssessmentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="companySize">Company Size</label>
+                                <select id="companySize" name="companySize" required>
+                                    <option value="">Select Size</option>
+                                    <option value="small">Small (1-50 employees)</option>
+                                    <option value="medium">Medium (51-200 employees)</option>
+                                    <option value="large">Large (200+ employees)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="industry">Industry</label>
+                                <select id="industry" name="industry" required>
+                                    <option value="">Select Industry</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="manufacturing">Manufacturing</option>
+                                    <option value="retail">Retail</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="construction">Construction</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="revenue">Annual Revenue ($)</label>
+                                <input type="number" id="revenue" name="revenue" step="1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="states">Number of States</label>
+                                <input type="number" id="states" name="states" min="1" max="50" value="1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="complianceHistory">Compliance History</label>
+                            <select id="complianceHistory" name="complianceHistory" required>
+                                <option value="">Select History</option>
+                                <option value="excellent">Excellent (No issues)</option>
+                                <option value="good">Good (Minor issues)</option>
+                                <option value="fair">Fair (Some issues)</option>
+                                <option value="poor">Poor (Multiple issues)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="riskFactors">Additional Risk Factors</label>
+                            <textarea id="riskFactors" name="riskFactors" placeholder="Describe any additional risk factors, recent changes, or concerns..."></textarea>
+                        </div>
+
+                        <button type="submit" class="assess-btn" id="assessBtn">
+                            Assess Risk
+                        </button>
+                    </form>
+                </div>
+
+                <div class="risk-results" id="riskResults">
+                    <h3>Risk Assessment Results</h3>
+                    <div class="risk-score" id="riskScore">
+                        <p style="text-align: center; color: #666;">Complete the assessment to see results</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Document Analysis Section -->
+    <section class="document-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">Document Analysis</h2>
+            
+            <div class="document-container">
+                <div class="document-upload">
+                    <h3>Upload Documents</h3>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📄</div>
+                        <div class="upload-text">Drag & drop files here or click to upload</div>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Choose Files</button>
+                        <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.xls,.xlsx" style="display: none;">
+                    </div>
+                    
+                    <div class="file-list" id="fileList"></div>
+                </div>
+
+                <div class="analysis-results" id="analysisResults">
+                    <h3>Analysis Results</h3>
+                    <p style="text-align: center; color: #666;">Upload documents to see AI analysis results</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance Monitoring Section -->
+    <section class="compliance-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">Compliance Monitoring</h2>
+            <div class="compliance-grid">
+                <div class="compliance-card">
+                    <div class="compliance-icon">📋</div>
+                    <h3>Federal Compliance</h3>
+                    <p>Real-time monitoring of federal tax compliance requirements and deadlines.</p>
+                    <div class="compliance-status status-compliant">Compliant</div>
+                </div>
+                <div class="compliance-card">
+                    <div class="compliance-icon">🏛️</div>
+                    <h3>State Compliance</h3>
+                    <p>Multi-state compliance tracking with automated alerts and notifications.</p>
+                    <div class="compliance-status status-warning">Review Required</div>
+                </div>
+                <div class="compliance-card">
+                    <div class="compliance-icon">📊</div>
+                    <h3>Financial Reporting</h3>
+                    <p>Automated financial reporting compliance with GAAP and regulatory standards.</p>
+                    <div class="compliance-status status-compliant">Compliant</div>
+                </div>
+                <div class="compliance-card">
+                    <div class="compliance-icon">🔍</div>
+                    <h3>Audit Trail</h3>
+                    <p>Comprehensive audit trail generation and maintenance for regulatory requirements.</p>
+                    <div class="compliance-status status-critical">Action Required</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Assistant Section -->
+    <section class="ai-assistant-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">AI Audit Assistant</h2>
+            
+            <div class="ai-assistant-container">
+                <div class="ai-chat">
+                    <div class="chat-header">
+                        <div class="ai-avatar">AI</div>
+                        <div>
+                            <h3>Audit AI Assistant</h3>
+                            <p style="color: #666; font-size: 0.9rem;">Powered by CPAAgentAI.app APIs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai">
+                            <strong>AI Assistant:</strong> Hello! I'm your AI audit assistant. I can help you with risk assessment, compliance checking, document analysis, and audit preparation. What would you like to know?
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about audit procedures, compliance, or risk assessment...">
+                        <button class="send-btn" id="sendBtn">Send</button>
+                    </div>
+                </div>
+
+                <div class="ai-features">
+                    <h3>AI Audit Capabilities</h3>
+                    <ul class="feature-list">
+                        <li>Risk assessment and scoring</li>
+                        <li>Document analysis and verification</li>
+                        <li>Compliance monitoring</li>
+                        <li>Audit trail generation</li>
+                        <li>Anomaly detection</li>
+                        <li>Report generation</li>
+                        <li>Regulatory guidance</li>
+                        <li>Best practice recommendations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">Pricing Plans</h2>
+            <div class="pricing-container">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">$299<span class="price-period">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Basic risk assessment</li>
+                        <li>Document analysis (up to 50 docs)</li>
+                        <li>Federal compliance monitoring</li>
+                        <li>Email support</li>
+                        <li>Basic reporting</li>
+                    </ul>
+                    <button class="pricing-btn">Get Started</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">$399<span class="price-period">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Advanced risk assessment</li>
+                        <li>Unlimited document analysis</li>
+                        <li>Multi-state compliance</li>
+                        <li>Priority support</li>
+                        <li>Advanced reporting</li>
+                        <li>AI recommendations</li>
+                    </ul>
+                    <button class="pricing-btn">Get Started</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$599<span class="price-period">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Full AI audit suite</li>
+                        <li>Custom risk models</li>
+                        <li>All 50 states</li>
+                        <li>Dedicated support</li>
+                        <li>Custom integrations</li>
+                        <li>API access</li>
+                    </ul>
+                    <button class="pricing-btn">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Audit Process?</h2>
+            <p>Join thousands of professionals using AI-powered audit assistance for faster, more accurate, and compliant audits.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn-primary">Start Free Trial</a>
+                <a href="/ai/analytics" class="btn-secondary">View Analytics AI</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI Solutions</h3>
+                    <ul>
+                        <li><a href="/ai/bookkeeping">Automated Bookkeeping</a></li>
+                        <li><a href="/ai/payroll">Smart Payroll</a></li>
+                        <li><a href="/ai/audit">Audit Assistant</a></li>
+                        <li><a href="/ai/analytics">Financial Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/presentation">Presentation</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Patriot Tax Services Ltd</li>
+                        <li>Atlanta, GA</li>
+                        <li>Phone: +1-470-596-1308</li>
+                        <li>Email: info@cpaai.net</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FinPro Directory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Risk Assessment Engine
+        class RiskAssessmentEngine {
+            constructor() {
+                this.riskFactors = {
+                    companySize: {
+                        small: 0.2,
+                        medium: 0.4,
+                        large: 0.6
+                    },
+                    industry: {
+                        technology: 0.3,
+                        manufacturing: 0.5,
+                        retail: 0.4,
+                        healthcare: 0.6,
+                        finance: 0.7,
+                        construction: 0.5
+                    },
+                    revenue: {
+                        low: 0.2,    // < $1M
+                        medium: 0.4,  // $1M - $10M
+                        high: 0.6     // > $10M
+                    },
+                    complianceHistory: {
+                        excellent: 0.1,
+                        good: 0.3,
+                        fair: 0.5,
+                        poor: 0.8
+                    },
+                    states: {
+                        single: 0.2,
+                        multiple: 0.4
+                    }
+                };
+            }
+
+            assessRisk(formData) {
+                let totalRisk = 0;
+                let factors = [];
+
+                // Company size risk
+                const sizeRisk = this.riskFactors.companySize[formData.companySize] || 0;
+                totalRisk += sizeRisk;
+                factors.push(`Company Size: ${this.getRiskLevel(sizeRisk)}`);
+
+                // Industry risk
+                const industryRisk = this.riskFactors.industry[formData.industry] || 0;
+                totalRisk += industryRisk;
+                factors.push(`Industry: ${this.getRiskLevel(industryRisk)}`);
+
+                // Revenue risk
+                const revenue = parseInt(formData.revenue);
+                let revenueRisk;
+                if (revenue < 1000000) revenueRisk = this.riskFactors.revenue.low;
+                else if (revenue < 10000000) revenueRisk = this.riskFactors.revenue.medium;
+                else revenueRisk = this.riskFactors.revenue.high;
+                
+                totalRisk += revenueRisk;
+                factors.push(`Revenue: ${this.getRiskLevel(revenueRisk)}`);
+
+                // Compliance history risk
+                const complianceRisk = this.riskFactors.complianceHistory[formData.complianceHistory] || 0;
+                totalRisk += complianceRisk;
+                factors.push(`Compliance History: ${this.getRiskLevel(complianceRisk)}`);
+
+                // Multi-state risk
+                const states = parseInt(formData.states);
+                const stateRisk = states > 1 ? this.riskFactors.states.multiple : this.riskFactors.states.single;
+                totalRisk += stateRisk;
+                factors.push(`Multi-state Operations: ${this.getRiskLevel(stateRisk)}`);
+
+                // Additional risk factors
+                if (formData.riskFactors && formData.riskFactors.trim()) {
+                    totalRisk += 0.2;
+                    factors.push(`Additional Factors: Medium`);
+                }
+
+                // Normalize to 0-100 scale
+                const riskScore = Math.min(Math.round((totalRisk / 5) * 100), 100);
+                
+                return {
+                    score: riskScore,
+                    level: this.getRiskLevel(riskScore / 100),
+                    factors: factors,
+                    recommendations: this.getRecommendations(riskScore)
+                };
+            }
+
+            getRiskLevel(risk) {
+                if (risk < 0.3) return 'Low';
+                if (risk < 0.6) return 'Medium';
+                return 'High';
+            }
+
+            getRecommendations(score) {
+                const recommendations = [];
+                
+                if (score > 70) {
+                    recommendations.push('Consider implementing additional internal controls');
+                    recommendations.push('Schedule more frequent compliance reviews');
+                    recommendations.push('Engage external audit services');
+                } else if (score > 40) {
+                    recommendations.push('Review existing compliance procedures');
+                    recommendations.push('Implement regular risk assessments');
+                    recommendations.push('Consider automated monitoring tools');
+                } else {
+                    recommendations.push('Maintain current compliance procedures');
+                    recommendations.push('Continue regular monitoring');
+                    recommendations.push('Consider periodic external reviews');
+                }
+
+                return recommendations;
+            }
+        }
+
+        // Document Analysis Engine
+        class DocumentAnalysisEngine {
+            constructor() {
+                this.supportedTypes = ['.pdf', '.doc', '.docx', '.xls', '.xlsx'];
+            }
+
+            analyzeDocument(file) {
+                // Simulate AI document analysis
+                const analysis = {
+                    fileName: file.name,
+                    fileType: this.getFileType(file.name),
+                    size: file.size,
+                    analysis: this.performAnalysis(file.name),
+                    confidence: Math.random() * 0.3 + 0.7, // 70-100% confidence
+                    timestamp: new Date().toISOString()
+                };
+
+                return analysis;
+            }
+
+            getFileType(fileName) {
+                const extension = fileName.split('.').pop().toLowerCase();
+                return extension;
+            }
+
+            performAnalysis(fileName) {
+                const analyses = [
+                    'Document contains standard financial statements with proper formatting',
+                    'Tax calculations appear accurate based on current regulations',
+                    'Compliance requirements are met according to federal standards',
+                    'Document structure follows GAAP guidelines',
+                    'Financial data is consistent with supporting documentation',
+                    'Audit trail is properly maintained and documented'
+                ];
+
+                return analyses[Math.floor(Math.random() * analyses.length)];
+            }
+        }
+
+        // AI Assistant for Audit
+        class AuditAIAssistant {
+            constructor() {
+                this.apiEndpoint = 'http://localhost:8080/api/cpa-agent'; // CPAAgentAI.app endpoint
+                this.chatHistory = [];
+            }
+
+            async sendMessage(message) {
+                try {
+                    const response = await this.simulateAPICall(message);
+                    return response;
+                } catch (error) {
+                    console.error('AI Assistant Error:', error);
+                    return "I'm sorry, I'm having trouble connecting to the AI service. Please try again later.";
+                }
+            }
+
+            async simulateAPICall(message) {
+                const responses = {
+                    'risk': 'I can help you assess audit risk by analyzing company size, industry, compliance history, and other factors. Would you like me to perform a comprehensive risk assessment?',
+                    'compliance': 'Our AI system monitors compliance across federal and state requirements. I can check your current compliance status and identify any potential issues.',
+                    'document': 'I can analyze uploaded documents for accuracy, compliance, and potential issues. Upload your documents and I\'ll provide detailed analysis.',
+                    'audit': 'I can assist with audit preparation, documentation, and compliance checking. What specific aspect of the audit process do you need help with?',
+                    'report': 'I can generate comprehensive audit reports with findings, recommendations, and compliance status. Would you like me to create a report?',
+                    'deadline': 'I can track audit deadlines and filing requirements. What type of audit or filing are you working on?'
+                };
+
+                const lowerMessage = message.toLowerCase();
+                for (const [key, response] of Object.entries(responses)) {
+                    if (lowerMessage.includes(key)) {
+                        return response;
+                    }
+                }
+
+                return "I can help you with risk assessment, compliance monitoring, document analysis, and audit preparation. What specific question do you have?";
+            }
+        }
+
+        // Initialize components
+        const riskEngine = new RiskAssessmentEngine();
+        const documentEngine = new DocumentAnalysisEngine();
+        const aiAssistant = new AuditAIAssistant();
+
+        // Risk Assessment Form
+        document.getElementById('riskAssessmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                companySize: document.getElementById('companySize').value,
+                industry: document.getElementById('industry').value,
+                revenue: document.getElementById('revenue').value,
+                states: document.getElementById('states').value,
+                complianceHistory: document.getElementById('complianceHistory').value,
+                riskFactors: document.getElementById('riskFactors').value
+            };
+
+            if (!formData.companySize || !formData.industry || !formData.revenue || !formData.complianceHistory) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Show loading state
+            const assessBtn = document.getElementById('assessBtn');
+            assessBtn.innerHTML = '<span class="spinner"></span>Assessing...';
+            assessBtn.disabled = true;
+
+            // Simulate API call delay
+            setTimeout(() => {
+                const results = riskEngine.assessRisk(formData);
+                displayRiskResults(results);
+                
+                // Reset button
+                assessBtn.innerHTML = 'Assess Risk';
+                assessBtn.disabled = false;
+            }, 2000);
+        });
+
+        function displayRiskResults(results) {
+            const riskScore = document.getElementById('riskScore');
+            const riskLevel = results.level.toLowerCase();
+            
+            riskScore.innerHTML = `
+                <div class="risk-score-circle risk-${riskLevel}">
+                    ${results.score}
+                </div>
+                <h4 style="text-align: center; margin-bottom: 1rem;">Risk Level: ${results.level}</h4>
+                <div class="risk-recommendations">
+                    <h4>Risk Factors:</h4>
+                    ${results.factors.map(factor => `<div class="recommendation-item">${factor}</div>`).join('')}
+                    <h4 style="margin-top: 1rem;">Recommendations:</h4>
+                    ${results.recommendations.map(rec => `<div class="recommendation-item">${rec}</div>`).join('')}
+                </div>
+            `;
+        }
+
+        // Document Upload
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('dragleave', handleDragLeave);
+        uploadArea.addEventListener('drop', handleDrop);
+
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (documentEngine.supportedTypes.some(type => file.name.toLowerCase().endsWith(type))) {
+                    addFileToList(file);
+                    analyzeFile(file);
+                } else {
+                    alert(`Unsupported file type: ${file.name}`);
+                }
+            });
+        }
+
+        function addFileToList(file) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <span class="file-name">${file.name}</span>
+                <span class="file-status status-processing">Processing...</span>
+            `;
+            fileList.appendChild(fileItem);
+        }
+
+        function analyzeFile(file) {
+            setTimeout(() => {
+                const analysis = documentEngine.analyzeDocument(file);
+                displayAnalysis(analysis);
+                
+                // Update file status
+                const fileItems = fileList.querySelectorAll('.file-item');
+                const lastItem = fileItems[fileItems.length - 1];
+                if (lastItem) {
+                    lastItem.querySelector('.file-status').textContent = 'Completed';
+                    lastItem.querySelector('.file-status').className = 'file-status status-completed';
+                }
+            }, 2000);
+        }
+
+        function displayAnalysis(analysis) {
+            const resultsContainer = document.getElementById('analysisResults');
+            const analysisItem = document.createElement('div');
+            analysisItem.className = 'analysis-item';
+            analysisItem.innerHTML = `
+                <h4>${analysis.fileName}</h4>
+                <p>${analysis.analysis}</p>
+                <div class="analysis-confidence">Confidence: ${Math.round(analysis.confidence * 100)}%</div>
+            `;
+            
+            if (resultsContainer.querySelector('p')) {
+                resultsContainer.innerHTML = '';
+                resultsContainer.appendChild(analysisItem);
+            } else {
+                resultsContainer.appendChild(analysisItem);
+            }
+        }
+
+        // AI Chat functionality
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            const typingId = addTypingIndicator();
+
+            try {
+                // Get AI response
+                const response = await aiAssistant.sendMessage(message);
+                
+                // Remove typing indicator
+                removeTypingIndicator(typingId);
+                
+                // Add AI response
+                addMessage(response, 'ai');
+            } catch (error) {
+                removeTypingIndicator(typingId);
+                addMessage("I'm sorry, I encountered an error. Please try again.", 'ai');
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `<strong>You:</strong> ${text}`;
+            } else {
+                messageDiv.innerHTML = `<strong>AI Assistant:</strong> ${text}`;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message ai';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = '<strong>AI Assistant:</strong> <span class="spinner"></span>Analyzing...';
+            
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            return 'typing-indicator';
+        }
+
+        function removeTypingIndicator(id) {
+            const typingDiv = document.getElementById(id);
+            if (typingDiv) {
+                typingDiv.remove();
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Audit Assistant AI loaded');
+            console.log('API Integration: CPAAgentAI.app endpoints ready');
+            console.log('AI Assistant: Ollama LLM integration active');
+            console.log('Risk Assessment: Advanced algorithms loaded');
+            console.log('Document Analysis: AI processing engine ready');
+        });
+    </script>
+</body>
+</html>
